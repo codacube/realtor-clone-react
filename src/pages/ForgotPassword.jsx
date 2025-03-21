@@ -20,7 +20,7 @@ export default function ForgotPassword() {
             toast.success("Email was sent")
         } catch(error) {
             toast.error("Could not send reset password")
-            console.log(error)
+            // console.log(error)
         }
     }
 
