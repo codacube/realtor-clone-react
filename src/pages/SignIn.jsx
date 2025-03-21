@@ -31,7 +31,7 @@ export default function SignIn() {
                 navigate("/")
             }
         } catch (error) {
-            toast.error("Bad username credentials")
+            toast.error("Username or password are invalid")
         }
     }
 
