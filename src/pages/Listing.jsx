@@ -1,4 +1,5 @@
 import { doc, getDoc } from "firebase/firestore"
+import { getAuth } from "firebase/auth"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router"
 import { db } from "../firebase"
@@ -13,12 +14,15 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import Contact from "../components/Contact"
 
 export default function Listing() {
+    const auth = getAuth()
     const params = useParams()
     const [listing, setListing] = useState(null)
     const [loading, setLoading] = useState(true)
     const [shareLinkCopied, setShareLinkCopied] = useState(false)
+    const [contactLandlord, setContactLandlord] = useState(false)
     
     useEffect(() => {
         async function fetchListing() {
@@ -103,7 +107,7 @@ export default function Listing() {
 
             <div className="m-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto p-4 rounded-lg shadow-lg bg-white lg:space-x-5">
                 {/* Property Info */}
-                <div className="w-full h-[200px] lg:h-[400px] ">
+                <div className="w-full">
                     {/* Title */}
                     <p className="text-2xl font-bold mb-3 text-blue-900">
                         {listing.name} - $ {listing.offer ? listing.discountedPrice
@@ -126,7 +130,7 @@ export default function Listing() {
                     <div className="flex justify-start items-center space-x-4 w-[75%]">
                         <p className="bg-red-800 w-full max-w-[200px] rounded-md p-1 text-white text-center font-semibold shadow-md">{listing.type === "rent" ? "Rent" : "Sale"}</p>
                         {listing.offer && (
-                            <p classNam="bg-green-800 w-full max-w-[200px] rounded-md p-1 text-white text-center font-semibold shadow-md">${+listing.regularPrice - +listing.discountedPrice} discount</p>
+                            <p className="bg-green-800 w-full max-w-[200px] rounded-md p-1 text-white text-center font-semibold shadow-md">${+listing.regularPrice - +listing.discountedPrice} discount</p>
                         )}
                     </div>
 
@@ -137,7 +141,7 @@ export default function Listing() {
                     </p>
 
                     {/* Details */}
-                    <ul className="flex items-center space-x-2 sm:space-x-10 text-sm font-semibold">
+                    <ul className="flex items-center space-x-2 sm:space-x-10 text-sm font-semibold mb-6">
                         <li className="flex items-center whitespace-nowrap">
                             <FaBed className="text-lg mr-1"/>
                             {+listing.bedrooms > 1 ? `${listing.bedrooms} Beds` : "1 Bed"}
@@ -156,6 +160,21 @@ export default function Listing() {
                         </li>
                     </ul>
 
+                    {/* Contact Landlord - is only displayed if user doesn't own the listing - also note, the ? is used incase currentUser has been populated yet */}
+                    { listing.userRef !== auth.currentUser?.uid && !contactLandlord && (
+                        <div className="mt-6">
+                            <button
+                                onClick={() => setContactLandlord(true)}
+                                className="px-7 py-3 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg w-full text-center transition duration-150 ease-in-out"
+                            >
+                                Contact Landlord
+                            </button>
+                        </div>
+                    )}
+                    {/* Contact Form */}
+                    { contactLandlord && (
+                        <Contact userRef={listing.userRef} listing={listing} />
+                    )}
                 </div>
                 
                 
