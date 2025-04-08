@@ -14,6 +14,7 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+
 import Contact from "../components/Contact"
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
 
