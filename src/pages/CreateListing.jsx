@@ -100,9 +100,14 @@ export default function CreateListing() {
         let location = ""
         if (geolocationEnabled) {
             // Fetch the data from the google API
-            const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${import.meta.env.VITE_GEOCODING_API_KEY}`)
+            
+            // IMPORTANT: Don't use import.meta.env.VITE_GEOCODING_API_KEY here. NextJS includes it in the build, exposing it.
+            //            We use a netlify function, React calls the function and the key is added
+            // const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${import.meta.env.VITE_GEOCODING_API_KEY}`) // This will leak the key
+
+            const response = await fetch(`/.netlify/functions/geocode?address=${encodeURIComponent(address)}`)
             const data = await response.json()
-            console.log(data)
+            //console.log(data)
 
             geolocation.lat = data.results[0]?.geometry.location.lat ?? 0
             geolocation.lng = data.results[0]?.geometry.location.lng ?? 0
