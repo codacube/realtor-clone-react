@@ -22,7 +22,7 @@ Live demo [here](https://codacube-realtor.netlify.app/) - might not be running (
   - Netlify will warn if a secret key is exposed during the build
   - A netlify function is used to make a call to the server to get the key, all handled by netlify
   - Cloudflare workers can also be used for this (but more setup and it's on a different host)
-- Firebase.js settings can be public, security is actually set in Firebase itself, but I've made
+- Firebase.js settings can be public, security is actually set in Firebase itself
 
 ## TODO:
 
