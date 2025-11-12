@@ -6,8 +6,8 @@ Live demo [here](https://codacube-realtor.netlify.app/) - might not be running (
 
 ## Running locally
 
-- Because of the netlify functions, you need to run this with the netlify CLI to emulate the netlify platform
-- Install it with `npm install netlify-cli --save-dev`
+- Because of the Netlify functions, you need to run this with the Netlify CLI to emulate the Netlify platform
+- Install the Netlify CLI with `npm install netlify-cli --save-dev`
 - It will read environment variables from the local .env file
 - Run the project with `npx netlify dev`. It will:
   - Automatically run `npm run dev`
