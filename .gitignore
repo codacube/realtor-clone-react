@@ -40,9 +40,6 @@ dist-ssr
 # Firebase
 # ----------------------------------------------------------------
 
-# Keep private - get your own firebase.js file :-D!
-src/firebase.js
-
 # Firebase CLI cache and local settings
 .firebase/
 
